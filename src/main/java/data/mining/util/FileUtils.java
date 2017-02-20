@@ -2,17 +2,20 @@ package data.mining.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class FileUtils {
 
     public static List<String> getResourceContent(String name) throws IOException {
-        String filePath = FileUtils.class.getClassLoader().getResource(name).getFile();
-        File file = new File(filePath);
+        URL url = FileUtils.class.getClassLoader().getResource(name);
 
-        return Files.readAllLines(file.toPath());
+        if (url != null) {
+            return Files.readAllLines(new File(url.getFile()).toPath());
+        }
+        return Collections.emptyList();
     }
 
 }

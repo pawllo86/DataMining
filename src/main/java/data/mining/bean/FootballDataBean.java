@@ -34,8 +34,8 @@ public class FootballDataBean {
 
     public Integer getGoalsDifference() {
         Integer result = null;
-        if (goalsScored != null && goalsLost != null) {
-            result = Math.abs(goalsScored.shortValue() - goalsLost.shortValue());
+        if (getGoalsScored() != null && getGoalsLost() != null) {
+            result = Math.abs(getGoalsScored().shortValue() - getGoalsLost().shortValue());
         }
         return result;
     }

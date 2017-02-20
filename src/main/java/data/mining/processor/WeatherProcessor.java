@@ -8,33 +8,30 @@ import java.util.stream.Collectors;
 
 public class WeatherProcessor extends Processor<WeatherDataBean> {
 
-    private static final String DATA_FILE_NAME = "weather.dat";
+    public static final String DATA_FILE_NAME = "weather.dat";
 
-    public void showSmallestTemperatureSpread() {
-        List<WeatherDataBean> sortedWeatherDataBeans = getData().stream()
-                .sorted(Comparator.comparing(WeatherDataBean::getSpreadTemperature).reversed()).collect(Collectors.toList());
+    public String findSmallestTemperatureSpread() {
+        if (getData() != null && !getData().isEmpty()) {
+            List<WeatherDataBean> sortedWeatherDataBeans = getData().stream()
+                    .sorted(Comparator.comparing(WeatherDataBean::getSpreadTemperature).reversed()).collect(Collectors.toList());
 
-        WeatherDataBean bean = sortedWeatherDataBeans.get(0);
-        if (bean != null) {
-            System.out.println("The Smallest Temperature Spread:");
-            System.out.println("Day: " + bean.getDay() + " spread: " + bean.getSpreadTemperature());
+            WeatherDataBean bean = sortedWeatherDataBeans.get(0);
+
+            return "Day: " + bean.getDay() + " spread: " + bean.getSpreadTemperature();
         } else {
-            System.out.println("No data!");
+            return "No data!";
         }
     }
 
     @Override
     protected List<String> filterLines(List<String> lines) {
         List<String> filteredLines = super.filterLines(lines);
-        filteredLines.remove(0);
-        filteredLines.remove(filteredLines.size() - 1);
 
+        if (!filteredLines.isEmpty()) {
+            filteredLines.remove(0);
+            filteredLines.remove(filteredLines.size() - 1);
+        }
         return filteredLines;
-    }
-
-    @Override
-    protected String getFileName() {
-        return DATA_FILE_NAME;
     }
 
     @Override
@@ -45,6 +42,11 @@ public class WeatherProcessor extends Processor<WeatherDataBean> {
         bean.setMinTemperature(parseStringValue(lineWords[2]));
 
         return bean;
+    }
+
+    @Override
+    protected String getFileName() {
+        return DATA_FILE_NAME;
     }
 
 }

@@ -34,8 +34,8 @@ public class WeatherDataBean {
 
     public Integer getSpreadTemperature() {
         Integer result = null;
-        if (maxTemperature != null && minTemperature != null) {
-            result = maxTemperature.shortValue() - minTemperature.shortValue();
+        if (getMaxTemperature() != null && getMinTemperature() != null) {
+            result = getMaxTemperature().shortValue() - getMinTemperature().shortValue();
         }
         return result;
     }

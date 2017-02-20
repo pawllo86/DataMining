@@ -6,11 +6,11 @@ import data.mining.processor.WeatherProcessor;
 public class DataMining {
 
     public static void main(String[] args) {
-        WeatherProcessor processor = new WeatherProcessor();
-        processor.showSmallestTemperatureSpread();
+        WeatherProcessor weatherProcessor = new WeatherProcessor();
+        System.out.println(weatherProcessor.findSmallestTemperatureSpread());
 
-        FootballProcessor processor2 = new FootballProcessor();
-        processor2.showSmallestGoalsDifference();
+        FootballProcessor footballProcessor = new FootballProcessor();
+        System.out.println(footballProcessor.findSmallestGoalsDifference());
     }
 
 }
