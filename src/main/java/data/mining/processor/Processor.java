@@ -1,7 +1,14 @@
 package data.mining.processor;
 
+import data.mining.util.FileUtils;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public abstract class Processor<T> {
 
@@ -16,7 +23,30 @@ public abstract class Processor<T> {
         return data;
     }
 
-    protected Integer parseStringValue(String value) {
+    protected List<T> createData() {
+        try {
+            List<String> lines = filterLines(FileUtils.getResourceContent(getFileName()));
+
+            return buildDataBeans(lines);
+        } catch (IOException e) {
+            logger.severe(e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    protected List<String> filterLines(List<String> lines) {
+        if (lines != null) {
+            return lines.stream().filter(line -> !line.isEmpty()).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    protected final List<T> buildDataBeans(Collection<String> dataLines) {
+        return dataLines.stream().map(dataLine -> createDataBean(Pattern.compile("\\s+")
+                .split(dataLine.trim()))).collect(Collectors.toList());
+    }
+
+    protected final Integer parseStringValue(String value) {
         String number = value.replaceAll("\\D", "");
         try {
             return Integer.parseInt(number);
@@ -27,6 +57,8 @@ public abstract class Processor<T> {
         }
     }
 
-    protected abstract List<T> createData();
+    protected abstract String getFileName();
+
+    protected abstract T createDataBean(String[] lineWords);
 
 }
