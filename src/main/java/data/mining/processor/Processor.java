@@ -47,14 +47,15 @@ public abstract class Processor<T> {
     }
 
     protected final Integer parseStringValue(String value) {
-        String number = value.replaceAll("\\D", "");
-        try {
-            return Integer.parseInt(number);
-        } catch (NumberFormatException e) {
-            logger.severe("Value: '" + value + "' can not be parsed to Integer! " + e.getMessage());
-
-            return null;
+        if (value != null) {
+            String number = value.replaceAll("\\D", "");
+            try {
+                return Integer.parseInt(number);
+            } catch (NumberFormatException e) {
+                logger.severe("Value: '" + value + "' can not be parsed to Integer! " + e.getMessage());
+            }
         }
+        return null;
     }
 
     protected abstract String getFileName();

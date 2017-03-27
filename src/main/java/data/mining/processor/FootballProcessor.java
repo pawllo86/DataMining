@@ -27,7 +27,7 @@ public class FootballProcessor extends  Processor<FootballDataBean> {
     protected List<String> filterLines(List<String> lines) {
         List<String> filteredLines = super.filterLines(lines);
 
-        if (!filteredLines.isEmpty()) {
+        if (filteredLines != null && !filteredLines.isEmpty()) {
             filteredLines.remove(0);
             filteredLines.remove(filteredLines.size() - 4);
         }
