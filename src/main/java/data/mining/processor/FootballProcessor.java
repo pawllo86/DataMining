@@ -29,7 +29,7 @@ public class FootballProcessor extends  Processor<FootballDataBean> {
 
         if (filteredLines != null && !filteredLines.isEmpty()) {
             filteredLines.remove(0);
-            filteredLines.remove(filteredLines.size() - 4);
+            filteredLines = filteredLines.stream().filter(line -> line.trim().split("\\s").length > 1).collect(Collectors.toList());
         }
         return filteredLines;
     }
