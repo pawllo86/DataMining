@@ -29,7 +29,7 @@ public class FootballProcessorTest {
     public void testProcessorWithExistingResource() {
         String result = processor.findSmallestGoalsDifference();
 
-        assertEquals("Club: Arsenal difference: 43", result);
+        assertEquals("Club: Aston_Villa difference: 1", result);
     }
 
     @Test

@@ -28,7 +28,7 @@ public class WeatherProcessorTest {
     public void testProcessorWithExistingResource() {
         String result = processor.findSmallestTemperatureSpread();
 
-        assertEquals("Day: 9 spread: 54", result);
+        assertEquals("Day: 14 spread: 2", result);
     }
 
     @Test

@@ -4,6 +4,7 @@ import data.mining.bean.FootballDataBean;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FootballProcessor extends  Processor<FootballDataBean> {
@@ -12,15 +13,13 @@ public class FootballProcessor extends  Processor<FootballDataBean> {
 
     public String findSmallestGoalsDifference() {
         if (getData() != null && !getData().isEmpty()) {
-            List<FootballDataBean> sortedFootballDataBeans = getData().stream()
-                    .sorted(Comparator.comparing(FootballDataBean::getGoalsDifference).reversed()).collect(Collectors.toList());
+            Optional<FootballDataBean> bean = getData().stream().min(Comparator.comparing(FootballDataBean::getGoalsDifference));
 
-            FootballDataBean bean = sortedFootballDataBeans.get(0);
-
-            return "Club: " + bean.getClub() + " difference: " + bean.getGoalsDifference();
-        } else {
-            return "No data!";
+            if (bean.isPresent()) {
+                return "Club: " + bean.get().getClub() + " difference: " + bean.get().getGoalsDifference();
+            }
         }
+        return "No data!";
     }
 
     @Override
